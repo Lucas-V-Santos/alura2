@@ -12,8 +12,17 @@ class Conta:
     def deposita(self, valor):
         self.__saldo += valor
 
+    def pode_sacar(self, valor):
+        valor_disponivel = self.__limite + self.__saldo
+        return valor <= valor_disponivel
+
+
     def saca(self, valor):
-        self.__saldo -= valor
+
+        if(self.pode_sacar() == True):
+            self.__saldo -= valor
+        else:
+            print("Valor Solicitado: {} \n Valor Disponível: {} \n Valor indisponível".format(valor, (self.__saldo+self.__limite)))
 
     def transferir(self, valor, recebedor):
         self.saca(valor)
@@ -25,7 +34,7 @@ class Conta:
 
     @property
     def titular(self):
-        return self.__titular
+        return self.__titular.title()
 
     @property
     def saldo(self):
